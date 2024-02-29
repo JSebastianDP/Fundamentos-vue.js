@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping list APP</title>
+</head>
+<body>
+    <div id="shopping-list">
+        <!-- Se hace llamado a la variable creada en data para mostrar su contenido-->
+        <h1>{{ header }}</h1>
+        <!-- Se crea un textfield con la variable creada en data-->
+        <input type="text" v-model="header">
+    </div>
+    <!-- Se importa vue mediante su cdn, tener en cuenta la version de vue ya que el link cambia-->
+    <script src="https://unpkg.com/vue@2"></script>
+    <script>
+        //Se crea una instancia vue
+        new Vue({
+            //Tener en cuenta el id del div 
+            el: '#shopping-list',
+            //Se crea una variable con el contenido que se desea mostrar en la pagina 
+            data: {
+                header: 'Shopping list with vue'
+            }
+
+        });
+    </script>
+</body>
+</html>
