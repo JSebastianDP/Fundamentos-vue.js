@@ -8,7 +8,7 @@
 <body>
     <div id="shopping-list">
         <!-- Se hace llamado a la variable creada en data para mostrar su contenido-->
-        <h1>{{ header }}</h1>
+        <h1>{{ header ? header :"Welcome"}}</h1>
         <!-- Se crea un textfield con la variable creada en data-->
         <input type="text" v-model="header">
     </div>
@@ -21,7 +21,7 @@
             el: '#shopping-list',
             //Se crea una variable con el contenido que se desea mostrar en la pagina 
             data: {
-                header: 'Shopping list with vue'
+                header: null
             }
 
         });
