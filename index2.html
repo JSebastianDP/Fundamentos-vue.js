@@ -9,6 +9,13 @@
     <div id="shopping-list">
         <!-- Se hace llamado a la variable creada en data para mostrar su contenido-->
         <h1>{{ header ? header :"Welcome"}}</h1>
+        <br> 
+        <h1>{{header2.toLocaleUpperCase()}}</h1>
+        <ul>
+            <!--Tener en en cuenta lo que se inserta en el v-for, item in items, en este caso item seria el que va dentro de llaves
+            e items el arreglo que se encuentra en data -->
+            <li v-for="item in items">{{ item}}</li>
+        </ul>
         <!-- Se crea un textfield con la variable creada en data-->
         <input type="text" v-model="header">
     </div>
@@ -21,7 +28,13 @@
             el: '#shopping-list',
             //Se crea una variable con el contenido que se desea mostrar en la pagina 
             data: {
-                header: null
+                header: null,
+                header2: 'Shopping list app',
+                items: [
+                    'item 1',
+                    'item 2',
+                    'item 3'
+                ]
             }
 
         });
