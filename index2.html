@@ -7,18 +7,37 @@
 </head>
 <body>
     <div id="shopping-list">
+        <div class="header">
         <!-- Se hace llamado a la variable creada en data para mostrar su contenido-->
-        <h1>{{ header ? header :"Welcome"}}</h1>
-        <br> 
-        <h1>{{header2.toLocaleUpperCase()}}</h1>
+            <h1>{{header ? header :"Encabezado con operador ternario"}}</h1>
+            <h1>{{header2.toLocaleUpperCase()}}</h1>
+            <!--Botones que llaman la funcion de cambiar estado, lo cual ayuda a visualizar u ocultar los campos de añadir item-->
+            <button v-if="state ==='default'" class="btn btn-primary" @click="changeState('edit')">Add item</button>
+            <button v-else class="btn btn-cancel" @click="changeState('default')">Cancel</button>
+        </div>
+        <!-- Se hace llamado a la variable state para mostrar u ocultar el contenido por medio de su estado-->
+        <div v-if="state == 'edit'" class="add-item-form">
+        <!-- El v-on:keyup.enter="items.push(newItem)" nos ayuda a registrar un nuevo item oprimiendo la tecla enter-->
+        <h1>Agregar items por medio de v-on</h1>
+        <!-- El v-on:click="items.push(newItem)" nos ayuda a registrar un nuevo item oprimiendo el boton de guardar-->
+
+        <br>
+        <h1>Agregar items por medio de un método</h1>
+        <!-- El @keyup.enter="saveItem" nos ayuda a registrar un nuevo item oprimiendo la tecla enter, 
+        seria lo mismo que un v-on:keyup, pero con el @ es una forma de abreviar-->
+        <input v-model="newItem" type="text" placeholder="Add an item" @keyup.enter="saveItem">
+        <p>Caracteres contados: {{characterCount }}</p>        
+        <!-- El @click="saveItem" nos ayuda a registrar un nuevo item oprimiendo el boton de guardar-->
+        <button class="btn btn-primary" :disabled="newItem.lenght === 0" @click="saveItem">Save item</button>
+        </div>
         <ul>
-            <!--Tener en en cuenta lo que se inserta en el v-for, item in items, en este caso item seria el que va dentro de llaves
+        <!--Tener en en cuenta lo que se inserta en el v-for, item in items, en este caso item seria el que va dentro de llaves
             e items el arreglo que se encuentra en data -->
-            <li v-for="item in items">{{ item}}</li>
+            <li v-for="item in items" >{{ item.label}}</li>
         </ul>
-        <!-- Se crea un textfield con la variable creada en data-->
-        <input type="text" v-model="header">
-    </div>
+        <!-- Se crea un textfield con la variable creada en data--> 
+        <p v-if="items.lenght ==0"></p>
+    </div>    
     <!-- Se importa vue mediante su cdn, tener en cuenta la version de vue ya que el link cambia-->
     <script src="https://unpkg.com/vue@2"></script>
     <script>
@@ -28,14 +47,45 @@
             el: '#shopping-list',
             //Se crea una variable con el contenido que se desea mostrar en la pagina 
             data: {
+                state: 'default',
                 header: null,
-                header2: 'Shopping list app',
+                header2: 'Shopping list app, encabezado con uppercase',
+                newItem: '',
                 items: [
-                    'item 1',
-                    'item 2',
-                    'item 3'
+                    {
+                        label:'Item JSON 1',
+                        purchased: false,
+                    },
+                    {
+                        label:'item JSON 2',
+                        purchased: true,
+                    },
+                    {
+                        label:'item  JSON 3',
+                        purchased: false,
+                    },
+               
                 ]
-            }
+            },
+            computed: {
+                characterCount(){
+                    return this.newItem.length;
+                }
+            },
+            methods: {
+                saveItem: function(){
+                    this.items.push({
+                        label: this.newItem,
+                        purchased: false,
+                    },);
+                    this.newItem = '';
+                },
+                changeState: function(newState){
+                    this.state = newState;
+                    this.newItem ='';
+                }
+
+            },
 
         });
     </script>
